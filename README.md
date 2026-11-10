@@ -157,7 +157,7 @@ Espressoは3.7.0をテストの依存関係へ明示しています。Composeの
 
 ## 原稿との対応
 
-本書リポジトリを隣の `../MayamitoTechbook4` に置いた場合、次のコマンドで掲載コード29件との一致を確認できます。
+本書リポジトリを隣の `../MayamitoTechbook4` に置いた場合、次のコマンドで掲載コード28件との一致を確認できます。
 
 ```sh
 python3 ../MayamitoTechbook4/scripts/check-sample-code.py --sample .
