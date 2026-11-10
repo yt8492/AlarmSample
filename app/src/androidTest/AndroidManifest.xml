@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <application>
+    <activity
+      android:name="com.yt8492.alarmsample.DuckingFocusActivity"
+      android:exported="true"
+      android:excludeFromRecents="true"
+      android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+    <provider
+      android:name="com.yt8492.alarmsample.SlowAudioProvider"
+      android:authorities="com.yt8492.alarmsample.test.slowaudio"
+      android:exported="true" />
+  </application>
+</manifest>
