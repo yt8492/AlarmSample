@@ -105,9 +105,9 @@ class AlarmBehaviorTest {
           .filter { it is MainActivity || it is RingingActivity }.forEach { it.finish() }
       }
       waitFor { !AlarmRingingService.isRinging && !held("AlarmSample:ringing") }
-      val manager = context.getSystemService(NotificationManager::class.java)
-      manager.cancelAll()
-      previousNotifications.forEach { manager.notify(it.tag, it.id, it.notification) }
+      val notificationManager = context.getSystemService(NotificationManager::class.java)
+      notificationManager.cancelAll()
+      previousNotifications.forEach { notificationManager.notify(it.tag, it.id, it.notification) }
       assertEquals(saved, store.read())
     }
   }

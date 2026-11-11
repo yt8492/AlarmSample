@@ -86,16 +86,16 @@ class AlarmViewModel(
 
   fun refreshStatus() {
     val context = getApplication<Application>()
-    val manager = context.getSystemService(NotificationManager::class.java)
+    val notificationManager = context.getSystemService(NotificationManager::class.java)
     val runtimeGranted = Build.VERSION.SDK_INT < 33 || ContextCompat.checkSelfPermission(
       context, Manifest.permission.POST_NOTIFICATIONS,
     ) == PackageManager.PERMISSION_GRANTED
     state.update { it.copy(
       reservedAlarm = store.read(),
-      notificationsAllowed = runtimeGranted && manager.areNotificationsEnabled() &&
-        manager.getNotificationChannel("alarm_ringing")?.importance != NotificationManager.IMPORTANCE_NONE,
+      notificationsAllowed = runtimeGranted && notificationManager.areNotificationsEnabled() &&
+        notificationManager.getNotificationChannel("alarm_ringing")?.importance != NotificationManager.IMPORTANCE_NONE,
       canSchedule = AlarmScheduler(context).canSchedule(),
-      fullScreenAvailable = Build.VERSION.SDK_INT < 34 || manager.canUseFullScreenIntent(),
+      fullScreenAvailable = Build.VERSION.SDK_INT < 34 || notificationManager.canUseFullScreenIntent(),
     ) }
   }
 

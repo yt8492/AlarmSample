@@ -10,7 +10,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 
 class AlarmNotifications(private val context: Context) {
-  private val manager = context.getSystemService(NotificationManager::class.java)
+  private val notificationManager = context.getSystemService(NotificationManager::class.java)
 
   init {
     val channel = NotificationChannel(
@@ -21,7 +21,7 @@ class AlarmNotifications(private val context: Context) {
       setSound(null, null)
       enableVibration(false)
     }
-    manager.createNotificationChannel(channel)
+    notificationManager.createNotificationChannel(channel)
   }
 
   fun ringing(): Notification {
@@ -49,7 +49,10 @@ class AlarmNotifications(private val context: Context) {
       )
       .setContentIntent(screen)
       .addAction(0, "停止", stop)
-    if (Build.VERSION.SDK_INT < 34 || manager.canUseFullScreenIntent()) {
+    if (
+      Build.VERSION.SDK_INT < 34 ||
+      notificationManager.canUseFullScreenIntent()
+    ) {
       builder.setFullScreenIntent(screen, true)
     }
     return builder.build()
@@ -69,7 +72,7 @@ class AlarmNotifications(private val context: Context) {
       .setAutoCancel(true)
       .build()
     // 通知が拒否されている場合でも、エラー報告によってクラッシュさせない。
-    runCatching { manager.notify(ERROR_ID, notification) }
+    runCatching { notificationManager.notify(ERROR_ID, notification) }
   }
 
   companion object {

@@ -20,9 +20,9 @@ object AlarmLaunchWakeLock {
   fun acquire(context: Context, timeoutMillis: Long = 30_000L): String {
     require(timeoutMillis > 0)
     val token = UUID.randomUUID().toString()
-    val manager = context.applicationContext
+    val powerManager = context.applicationContext
       .getSystemService(PowerManager::class.java)
-    val lock = manager.newWakeLock(
+    val lock = powerManager.newWakeLock(
       PowerManager.PARTIAL_WAKE_LOCK, "AlarmSample:launch",
     )
     lock.setReferenceCounted(false)

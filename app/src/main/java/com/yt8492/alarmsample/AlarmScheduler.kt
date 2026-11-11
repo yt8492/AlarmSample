@@ -9,10 +9,11 @@ import android.os.Build
 
 class AlarmScheduler(context: Context) {
   private val context = context.applicationContext
-  private val manager = context.getSystemService(AlarmManager::class.java)
+  private val alarmManager =
+    context.getSystemService(AlarmManager::class.java)
 
   fun canSchedule(): Boolean =
-    Build.VERSION.SDK_INT < 31 || manager.canScheduleExactAlarms()
+    Build.VERSION.SDK_INT < 31 || alarmManager.canScheduleExactAlarms()
 
   fun schedule(alarm: Alarm) {
     if (!canSchedule()) {
@@ -27,7 +28,7 @@ class AlarmScheduler(context: Context) {
       context, 1, deliveryIntent(trigger),
       PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
     )
-    manager.setAlarmClock(
+    alarmManager.setAlarmClock(
       AlarmManager.AlarmClockInfo(trigger, showIntent), operation,
     )
   }
@@ -37,7 +38,7 @@ class AlarmScheduler(context: Context) {
       context, 1, deliveryIntent(0L),
       PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE,
     ) ?: return
-    manager.cancel(operation)
+    alarmManager.cancel(operation)
     operation.cancel()
   }
 
